@@ -1,14 +1,27 @@
-import React, { Component } from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-import { getTodos } from "../actions/todo";
-import Todo from "./Todo";
-import Empty from "./Empty";
+import { getTodos } from '../actions/todo';
+import Todo from './Todo';
+import Empty from './Empty';
+
+const styles = {
+  wrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '20px',
+  },
+  list: {
+    width: '80%',
+    listStyle: 'none',
+  },
+};
 
 class TodosList extends Component {
   componentDidMount() {
-    // this.props.getTodos();
+    const { getTodos } = this.props;
+    getTodos();
   }
 
   render() {
@@ -23,9 +36,7 @@ class TodosList extends Component {
               <Todo
                 todo={item}
                 key={item.id}
-                removeTodoFetching={
-                  todo.removeTodoId === item.id && todo.removeTodoFetching
-                }
+                removeTodoFetching={todo.removeTodoId === item.id && todo.removeTodoFetching}
               />
             ))
           )}
@@ -35,26 +46,13 @@ class TodosList extends Component {
   }
 }
 
-const styles = {
-  wrapper: {
-    display: "flex",
-    justifyContent: "center",
-    marginTop: "20px"
-  },
-  list: {
-    width: "80%",
-    listStyle: "none"
-  }
-};
-
 const mapStateToProps = state => ({
-  todo: state.todo
+  todo: state.todo,
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ getTodos }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ getTodos }, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(TodosList);

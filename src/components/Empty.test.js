@@ -1,11 +1,11 @@
-import React from "react";
-import { shallow } from "enzyme";
+import React from 'react';
+import { shallow } from 'enzyme';
 
-import { Empty } from "./Empty";
+import { Empty } from './Empty';
 
-describe("<Empty />", () => {
-  it("should render", () => {
+describe('<Empty />', () => {
+  it('should render', () => {
     const wrapper = shallow(<Empty />);
-    expect(wrapper.text()).toEqual("Não possui todos");
+    expect(wrapper.text()).toEqual('Não possui todos');
   });
 });

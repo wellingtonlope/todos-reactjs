@@ -1,28 +1,37 @@
-import React, { Component } from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-import { addTodo, clearTodo } from "../actions/todo";
+import { addTodo, clearTodo } from '../actions/todo';
 
-import Loader from "./Loader";
+import Loader from './Loader';
+
+const styles = {
+  wrapperInput: {
+    display: 'flex',
+    justifyContent: 'center',
+    paddingTop: '20px',
+  },
+  input: {
+    padding: '6px',
+    height: '36px',
+    width: '60%',
+  },
+  buttonAdd: {
+    display: 'flex',
+    justifyContent: 'center',
+    width: '20%',
+    backgroundColor: '#28a745',
+    border: 'none',
+    fontSize: '1.2rem',
+    fontWeight: 'bold',
+    color: 'white',
+  },
+};
 
 export class Input extends Component {
   state = {
-    newTodoText: ""
-  };
-
-  addTodo = () => {
-    this.props.addTodo(this.state.newTodoText);
-  };
-
-  clearTodo = () => {
-    const { addTodoClear } = this.props.todo;
-    if (addTodoClear) {
-      this.setState({
-        newTodoText: ""
-      });
-      this.props.clearTodo(false);
-    }
+    newTodoText: '',
   };
 
   componentDidMount() {
@@ -33,8 +42,30 @@ export class Input extends Component {
     this.clearTodo();
   }
 
+  addTodo = () => {
+    const { addTodo } = this.props;
+    const { newTodoText } = this.state;
+    addTodo(newTodoText);
+  };
+
+  clearTodo = () => {
+    const {
+      todo: { addTodoClear },
+    } = this.props;
+    const { clearTodo: clear } = this.props;
+    if (addTodoClear) {
+      this.setState({
+        newTodoText: '',
+      });
+      clear(false);
+    }
+  };
+
   render() {
-    const { addTodoFetching, addTodoError } = this.props.todo;
+    const {
+      todo: { addTodoFetching },
+    } = this.props;
+    const { newTodoText } = this.state;
     return (
       <div style={styles.wrapperInput}>
         <input
@@ -42,60 +73,32 @@ export class Input extends Component {
           placeholder="Digite um todo..."
           disabled={addTodoFetching}
           style={styles.input}
-          value={this.state.newTodoText}
-          onChange={e =>
-            this.setState({
-              newTodoText: e.target.value
-            })
+          value={newTodoText}
+          onChange={e => this.setState({
+            newTodoText: e.target.value,
+          })
           }
         />
         <button
+          type="button"
           style={styles.buttonAdd}
           onClick={this.addTodo}
           disabled={addTodoFetching}
         >
-          {addTodoFetching ? (
-            <Loader stylesLoader={{ width: "18px", height: "18px" }} />
-          ) : (
-            "Add"
-          )}
+          {addTodoFetching ? <Loader stylesLoader={{ width: '18px', height: '18px' }} /> : 'Add'}
         </button>
       </div>
     );
   }
 }
 
-const styles = {
-  wrapperInput: {
-    display: "flex",
-    justifyContent: "center",
-    paddingTop: "20px"
-  },
-  input: {
-    padding: "6px",
-    height: "36px",
-    width: "60%"
-  },
-  buttonAdd: {
-    display: "flex",
-    justifyContent: "center",
-    width: "20%",
-    backgroundColor: "#28a745",
-    border: "none",
-    fontSize: "1.2rem",
-    fontWeight: "bold",
-    color: "white"
-  }
-};
-
 const mapStateToProps = state => ({
-  todo: state.todo
+  todo: state.todo,
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ addTodo, clearTodo }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ addTodo, clearTodo }, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Input);

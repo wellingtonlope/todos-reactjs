@@ -6,10 +6,10 @@ import {
   REMOVE_TODO_REQUEST,
   REMOVE_TODO_ERROR,
   REMOVE_TODO_SUCCESS,
-  GET_TODOS
-} from "../constants/actionTypes";
+  GET_TODOS,
+} from '../constants/actionTypes';
 
-import reducer from "./todo";
+import reducer from './todo';
 
 const initialState = {
   todos: [],
@@ -18,87 +18,82 @@ const initialState = {
   addTodoClear: false,
   removeTodoFetching: false,
   removeTodoError: false,
-  removeTodoId: ""
+  removeTodoId: '',
 };
 
-describe("todo reducer", () => {
-  it("should return the initial state", () => {
+describe('todo reducer', () => {
+  it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual(initialState);
   });
 
-  it("should handle ADD_TODO_REQUEST", () => {
+  it('should handle ADD_TODO_REQUEST', () => {
     expect(reducer({}, { type: ADD_TODO_REQUEST })).toEqual({
       addTodoFetching: true,
-      addTodoError: false
+      addTodoError: false,
     });
   });
 
-  it("should handle ADD_TODO_ERROR", () => {
+  it('should handle ADD_TODO_ERROR', () => {
     expect(reducer({}, { type: ADD_TODO_ERROR })).toEqual({
       addTodoError: true,
-      addTodoFetching: false
+      addTodoFetching: false,
     });
   });
 
-  it("should handle ADD_TODO_SUCCESS", () => {
+  it('should handle ADD_TODO_SUCCESS', () => {
     expect(reducer({}, { type: ADD_TODO_SUCCESS })).toEqual({
       addTodoError: false,
-      addTodoFetching: false
+      addTodoFetching: false,
     });
   });
 
-  it("should handle ADD_TODO_CLEAR return true", () => {
+  it('should handle ADD_TODO_CLEAR return true', () => {
     expect(reducer({}, { type: ADD_TODO_CLEAR, payload: true })).toEqual({
-      addTodoClear: true
+      addTodoClear: true,
     });
   });
 
-  it("should handle ADD_TODO_CLEAR return false", () => {
+  it('should handle ADD_TODO_CLEAR return false', () => {
     expect(reducer({}, { type: ADD_TODO_CLEAR, payload: false })).toEqual({
-      addTodoClear: false
+      addTodoClear: false,
     });
   });
 
-  it("should handle REMOVE_TODO_REQUEST", () => {
+  it('should handle REMOVE_TODO_REQUEST', () => {
     expect(reducer({}, { type: REMOVE_TODO_REQUEST, payload: 1 })).toEqual({
       removeTodoError: false,
       removeTodoFetching: true,
-      removeTodoId: 1
+      removeTodoId: 1,
     });
   });
 
-  it("should handle REMOVE_TODO_ERROR", () => {
+  it('should handle REMOVE_TODO_ERROR', () => {
     expect(reducer({}, { type: REMOVE_TODO_ERROR })).toEqual({
       removeTodoError: true,
       removeTodoFetching: false,
-      removeTodoId: ""
+      removeTodoId: '',
     });
   });
 
-  it("should handle REMOVE_TODO_SUCCESS", () => {
+  it('should handle REMOVE_TODO_SUCCESS', () => {
     expect(reducer({}, { type: REMOVE_TODO_SUCCESS })).toEqual({
       removeTodoFetching: false,
       removeTodoError: false,
-      removeTodoId: ""
+      removeTodoId: '',
     });
   });
 
-  it("should handle GET_TODOS empty", () => {
-    expect(
-      reducer({ todos: [] }, { type: GET_TODOS, payload: undefined })
-    ).toEqual({
-      todos: []
+  it('should handle GET_TODOS empty', () => {
+    expect(reducer({ todos: [] }, { type: GET_TODOS, payload: undefined })).toEqual({
+      todos: [],
     });
   });
 
-  it("should handle GET_TODOS", () => {
+  it('should handle GET_TODOS', () => {
     expect(
-      reducer(
-        { todos: [] },
-        { type: GET_TODOS, payload: [{ id: 1, description: "test" }] }
-      )
+      reducer({ todos: [] }, { type: GET_TODOS, payload: [{ id: 1, description: 'test' }] }),
     ).toEqual({
-      todos: [{ id: 1, description: "test" }]
+      todos: [{ id: 1, description: 'test' }],
     });
   });
 });

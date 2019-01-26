@@ -31,10 +31,15 @@ const styles = {
   },
 };
 
-const Todo = ({ todo, removeTodo, removeTodoFetching }) => (
+export const Todo = ({ todo, removeTodo, removeTodoFetching }) => (
   <li style={styles.item}>
     <span style={styles.label}>{todo.description}</span>
-    <button type="button" style={styles.buttonDelete} onClick={() => removeTodo(todo)}>
+    <button
+      type="button"
+      disabled={removeTodoFetching}
+      style={styles.buttonDelete}
+      onClick={() => removeTodo(todo)}
+    >
       {removeTodoFetching ? <Loader stylesLoader={{ width: '18px', height: '18px' }} /> : 'Done'}
     </button>
   </li>

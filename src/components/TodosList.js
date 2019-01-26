@@ -18,7 +18,7 @@ const styles = {
   },
 };
 
-class TodosList extends Component {
+export class TodosList extends Component {
   componentDidMount() {
     const { getTodos } = this.props;
     getTodos();
